@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andreea ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    overflow-x: hidden;
+    font-family: 'Segoe UI', cursive;
+    background: radial-gradient(circle at center, #ff4d6d, #1a0010);
+    color: white;
+    animation: pulseBg 6s infinite alternate;
+}
+
+/* Puls fundal */
+@keyframes pulseBg {
+    0% { background-size: 100%; }
+    100% { background-size: 120%; }
+}
+
+/* STELE */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* TITLU */
+h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 2.5em;
+    text-shadow: 0 0 20px #fff, 0 0 40px #ff99ac;
+    margin: 10px 0;
+}
+
+/* CONTAINER PRINCIPAL */
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+/* VIDEO */
+.photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 20px;
+    box-shadow: 0 0 20px #fff;
+    cursor: pointer;
+    transition: transform 0.5s ease, width 0.5s ease, height 0.5s ease;
+}
+.photo video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.photo.active {
+    width: 400px;
+    height: 400px;
+    transform: scale(1.05);
+}
+
+/* SCRISOARE */
+.letter {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px;
+    max-width: 500px;
+    font-size: 1em;
+    line-height: 1.6em;
+    box-shadow: 0 0 30px rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+}
+
+/* MESAJ + BUTON CENTRATE */
+.center-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    width: 100%;
+}
+
+/* MESAJ */
+#message {
+    width: 80%;
+    text-align: center;
+    font-size: 1.2em;
+    min-height: 50px;
+}
+
+/* BUTON */
+button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    border-radius: 30px;
+    border: none;
+    background: white;
+    color: #ff1744;
+    cursor: pointer;
+    box-shadow: 0 0 20px #fff;
+    transition: transform 0.3s;
+}
+button:hover {
+    transform: scale(1.1);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .letter {
+        max-width: 90%;
+        font-size: 1em;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- MUZICA -->
+<audio id="music" loop>
+  <source src="audio/ah.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// autoplay după click
+const music = document.getElementById("music");
+document.addEventListener("click", function startMusic() {
+    music.play().catch(err => console.log("Autoplay blocat, așteptăm click..."));
+    document.removeEventListener("click", startMusic);
+});
+window.addEventListener("load", () => {
+    music.play().catch(err => console.log("Autoplay blocat."));
+});
+</script>
+
+<!-- STELE -->
+<canvas id="stars"></canvas>
+
+<!-- TITLU -->
+<h1>❤️ Valentine's Day ❤️</h1>
+<h1>❤️ La Multi Ani Noua ❤️</h1>
+
+<!-- CONTAINER VIDEO + SCRISOARE -->
+<div class="container">
+
+  <!-- VIDEO -->
+  <div class="photo">
+    <video autoplay loop muted playsinline>
+      <source src="video.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- SCRISOARE -->
+  <div class="letter">
+    <p>De când te-am întâlnit, am înțeles cu adevărat ce înseamnă să fii acasă. Tu ești acel „acasă” care mă cuprinde chiar și atunci când lumea din jur e haotică. Fiecare zâmbet al tău, fiecare privire, fiecare cuvânt îmi dă putere și mă face să cred că iubirea adevărată există și că noi am fost norocoși să o găsim unul în celălalt.</p>
+    <p>Îți mulțumesc că mă accepți cu tot ce sunt, că mă iubești chiar și în zilele mele grele și că faci ca fiecare moment împreună să fie o comoară. Promit să fiu lângă tine mereu, să te sprijin, să te iubesc și să fac ca viața noastră să fie plină de râsete, povești și amintiri care să ne țină de mână pentru totdeauna.</p>
+    <p>Tu ești motivul pentru care cred că iubirea nu are limite și că sufletul poate fi complet atunci când ești cu persoana potrivită. Te aleg azi, mâine și în toate zilele ce vor veni, și vreau să știi că orice clipă fără tine ar fi incompletă. Te iubesc mai mult decât cuvintele pot spune și mai profund decât poate simți inima mea. 🥹❤️</p>
+  </div>
+
+</div>
+
+<!-- MESAJ + BUTON CENTRATE -->
+<div class="center-container">
+    <div id="message"></div>
+    <button onclick="showLove()">Apasă aici 💌</button>
+</div>
+
+<script>
+// ===== STELE =====
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+for(let i=0;i<250;i++){
+    stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*2 });
+}
+
+function drawStars(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="white";
+    stars.forEach(s=>{
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        ctx.fill();
+        s.y += 0.4;
+        if(s.y > canvas.height) s.y = 0;
+    });
+    requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// ===== MESAJ TYPING =====
+const text = "Mami, tu ești universul meu. În fiecare zi cu tine e o poveste magică. Te iubesc infinit! 💖";
+let index = 0;
+
+function typeEffect() {
+    if (index < text.length) {
+        document.getElementById("message").innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeEffect, 40);
+    }
+}
+
+// ===== ARTIFICII =====
+function fireworks(){
+    for(let i=0;i<120;i++){
+        const p=document.createElement("div");
+        p.innerHTML="💖";
+        p.style.position="absolute";
+        p.style.left="50%";
+        p.style.top="50%";
+        p.style.fontSize=Math.random()*20+15+"px";
+        p.style.transition="all 1.2s ease-out";
+        document.body.appendChild(p);
+
+        const x=(Math.random()-0.5)*800;
+        const y=(Math.random()-0.5)*600;
+
+        setTimeout(()=>{ p.style.transform=`translate(${x}px,${y}px)`; p.style.opacity=0; },10);
+        setTimeout(()=>p.remove(),1200);
+    }
+}
+
+function showLove(){
+    document.getElementById("message").innerHTML="";
+    index=0;
+    typeEffect();
+    fireworks();
+}
+
+// VIDEO CLICK ZOOM
+const photo = document.querySelector('.photo');
+photo.addEventListener('click', () => { photo.classList.toggle('active'); });
+
+</script>
+
+</body>
+</html>
